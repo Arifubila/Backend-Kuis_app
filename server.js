@@ -7,6 +7,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/api", authRoutes);
+app.use("/api/quiz", quizRoutes);
 
 app.get("/", (req, res) => {
   res.send("Quiz App Backend is running...");
