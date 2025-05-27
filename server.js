@@ -1,6 +1,8 @@
 const express = require("express");
 const connectDB = require("./src/config/db");
 const authRoutes = require("./src/routes/authRoutes");
+const quizRoutes = require("./src/routes/quizRoutes");
+const scoreRoutes = require("./src/routes/scoreRoutes");
 
 connectDB();
 const app = express();
@@ -8,6 +10,7 @@ app.use(express.json());
 
 app.use("/api", authRoutes);
 app.use("/api/quiz", quizRoutes);
+app.use("/api/score", scoreRoutes);
 
 app.get("/", (req, res) => {
   res.send("Quiz App Backend is running...");
