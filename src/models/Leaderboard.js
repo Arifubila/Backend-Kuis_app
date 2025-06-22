@@ -1,9 +1,15 @@
 const mongoose = require("mongoose");
 
-const LeaderboardSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  score: { type: Number, required: true },
-  createdAt: { type: Date, default: Date.now },
+const leaderboardSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User", // harus sesuai dengan nama model
+    required: true,
+  },
+  score: {
+    type: Number,
+    required: true,
+  },
 });
 
-module.exports = mongoose.model("Leaderboard", LeaderboardSchema);
+module.exports = mongoose.model("Leaderboard", leaderboardSchema);
