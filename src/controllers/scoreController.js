@@ -34,14 +34,16 @@ exports.getLeaderboard = async (req, res) => {
     const topScores = await Leaderboard.find()
       .sort({ score: -1 })
       .limit(10)
-      .populate("user", "username"); // atau "name" tergantung field kamu
+      .populate("user", "username");
 
-    const formatted = topScores.map((entry) => ({
-      name: entry.user.username, // atau entry.user.name
-      score: entry.score,
-    }));
+    const formatted = topScores
+      .filter((entry) => entry.user && entry.user.username)
+      .map((entry) => ({
+        name: entry.user.username,
+        score: entry.score,
+      }));
 
-    res.json(formatted);
+    res.json(formatted); // kirim sebagai array langsung
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
