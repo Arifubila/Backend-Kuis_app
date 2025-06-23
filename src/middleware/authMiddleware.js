@@ -16,7 +16,11 @@ module.exports = (roles) => {
           .status(403)
           .json({ message: "Forbidden. You don't have permission." });
       }
-      req.user = decoded;
+      req.user = {
+        id: decoded.userId, // Ambil dari token
+        role: decoded.role,
+      };
+
       next();
     } catch (err) {
       res.status(400).json({ message: "Invalid token." });
