@@ -31,12 +31,17 @@ exports.submitQuiz = async (req, res) => {
     const existingScore = await Leaderboard.findOne({ user: userId });
 
     if (existingScore) {
-      if (score > existingScore.score) {
-        existingScore.score = score;
+      if (existingScore) {
+        existingScore.score += score; // ⬅️ Tambah skor baru
         await existingScore.save();
-        console.log("✅ Skor diperbarui karena lebih tinggi:", score);
+        console.log(
+          "✅ Skor ditambahkan. Total sekarang:",
+          existingScore.score
+        );
       } else {
-        console.log("ℹ️ Skor lebih rendah, tidak disimpan:", score);
+        const newScore = new Leaderboard({ user: userId, score });
+        await newScore.save();
+        console.log("🎉 Skor baru disimpan:", score);
       }
     } else {
       const newScore = new Leaderboard({ user: userId, score });
