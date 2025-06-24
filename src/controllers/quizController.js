@@ -1,11 +1,40 @@
 const Quiz = require("../models/Quiz");
 
+const allowedCategories = ["matematika", "sains", "bahasa inggris", "sejarah"];
+
 exports.createQuiz = async (req, res) => {
-  const { title, questions } = req.body;
+  let { title, questions, category } = req.body;
+
+  if (category) {
+    category = category.trim().toLowerCase();
+  }
+
+  if (!category || !allowedCategories.includes(category)) {
+    return res
+      .status(400)
+      .json({ message: "Kategori tidak valid atau tidak ada." });
+  }
 
   try {
-    const quiz = await Quiz.create({ title, questions });
-    res.status(201).json({ message: "Quiz created successfully!" });
+    // Cek apakah quiz dengan kategori & title sudah ada
+    let existingQuiz = await Quiz.findOne({ category, title });
+
+    if (existingQuiz) {
+      // Jika sudah ada, tambahkan soal-soal baru ke dalamnya
+      existingQuiz.questions.push(...questions);
+      await existingQuiz.save();
+
+      return res.status(200).json({
+        message: "Soal berhasil ditambahkan ke kuis yang sudah ada!",
+        quiz: existingQuiz,
+      });
+    }
+
+    // Jika belum ada, buat kuis baru
+    const newQuiz = await Quiz.create({ title, category, questions });
+    res
+      .status(201)
+      .json({ message: "Kuis baru berhasil dibuat!", quiz: newQuiz });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
