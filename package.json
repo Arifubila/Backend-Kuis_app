@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.15.0",
+    "nodemon": "^3.1.10"
+  },
+  "name": "backend-kuis_app",
+  "version": "1.0.0",
+  "description": "Backend untuk aplikasi website kuis tugas layanan web",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arifubila/Backend-Kuis_app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Arifubila/Backend-Kuis_app/issues"
+  },
+  "homepage": "https://github.com/Arifubila/Backend-Kuis_app#readme"
+}
