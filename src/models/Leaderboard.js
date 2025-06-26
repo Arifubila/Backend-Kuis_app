@@ -5,12 +5,19 @@ const leaderboardSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    unique: true, // ⬅️ WAJIB! Agar user tidak bisa punya skor lebih dari 1
+    required: true,
+  },
+  category: {
+    type: String,
+    required: true,
   },
   score: {
     type: Number,
     required: true,
   },
 });
+
+// Mencegah satu user punya lebih dari 1 skor untuk kategori yang sama
+leaderboardSchema.index({ user: 1, category: 1 }, { unique: true });
 
 module.exports = mongoose.model("Leaderboard", leaderboardSchema);
